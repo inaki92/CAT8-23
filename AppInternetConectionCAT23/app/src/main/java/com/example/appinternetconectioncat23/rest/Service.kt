@@ -4,6 +4,7 @@ import com.example.appinternetconectioncat23.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -54,7 +55,7 @@ object Service {
      * 1. Create the Builder from [Retrofit]
      * 2. Add the BASE URL
      * 3. Add the converter factory
-     * 4. Add the Call adapter factory (if needed)
+     * 4. Add the Call adapter factory (if needed using RXJAVA)
      * 5. Add you OKHTTP object
      * 6. Build and create the interface passing the reference of it
      */
@@ -62,6 +63,7 @@ object Service {
         Retrofit.Builder()
             .baseUrl(ServiceApi.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
             .build()
             .create(ServiceApi::class.java)

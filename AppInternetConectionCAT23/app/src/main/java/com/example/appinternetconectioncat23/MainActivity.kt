@@ -1,7 +1,6 @@
 package com.example.appinternetconectioncat23
 
 import android.Manifest
-import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +13,9 @@ import com.example.appinternetconectioncat23.adapter.FlowersAdapter
 import com.example.appinternetconectioncat23.databinding.ActivityMainBinding
 import com.example.appinternetconectioncat23.model.Flower
 import com.example.appinternetconectioncat23.rest.Service
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,6 +32,10 @@ class MainActivity : AppCompatActivity() {
         FlowersAdapter {
             // TODO operation for the click
         }
+    }
+
+    private val disposable by lazy {
+        CompositeDisposable()
     }
 
     private lateinit var networkState: ConnectivityState
@@ -67,10 +73,27 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         if (networkState.checkInternetConnection()) {
-            makeNetworkConnection()
+            // makeNetworkConnectionWithCallbackEnqueue()
+            networkConnectionWithRx()
         } else {
             showError("NO INTERNET CONNECTION")
         }
+    }
+
+    private fun networkConnectionWithRx() {
+        Service.retrofitService.getFlowersRx()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                 { response -> flowerAdapter.updateFlowers(response) },
+                 { error -> showError(error.localizedMessage) }
+            )
+            .also { disposable.add(it) }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        disposable.clear()
     }
 
     override fun onRequestPermissionsResult(
@@ -91,7 +114,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun makeNetworkConnection() {
+    private fun makeNetworkConnectionWithCallbackEnqueue() {
+
         Service.retrofitService.getFlowers().enqueue(object: Callback<List<Flower>> {
 
             override fun onResponse(call: Call<List<Flower>>, response: Response<List<Flower>>) {
