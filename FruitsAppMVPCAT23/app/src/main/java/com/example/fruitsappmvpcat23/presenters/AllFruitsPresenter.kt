@@ -2,9 +2,13 @@ package com.example.fruitsappmvpcat23.presenters
 
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import com.example.fruitsappmvpcat23.database.FruitsDAO
+import com.example.fruitsappmvpcat23.database.LocalFruitsRepository
+import com.example.fruitsappmvpcat23.database.LocalFruitsRepositoryImpl
 import com.example.fruitsappmvpcat23.model.domain.FruitDomain
 import com.example.fruitsappmvpcat23.rest.FruitsRepository
 import com.example.fruitsappmvpcat23.rest.FruitsRepositoryImpl
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 
 interface AllFruitsPresenter {
@@ -15,9 +19,10 @@ interface AllFruitsPresenter {
 }
 
 class AllFruitsPresenterImpl(
-    private val repository: FruitsRepository = FruitsRepositoryImpl(),
+    private val fruitsDAO: FruitsDAO,
     private var viewContractAllFruits: ViewContractAllFruits? = null,
-    private val disposables: CompositeDisposable = CompositeDisposable()
+    private val disposables: CompositeDisposable = CompositeDisposable(),
+    private val repository: FruitsRepository = FruitsRepositoryImpl(fruitsDAO)
 ) : AllFruitsPresenter {
 
     override fun init(viewContract: ViewContractAllFruits) {
