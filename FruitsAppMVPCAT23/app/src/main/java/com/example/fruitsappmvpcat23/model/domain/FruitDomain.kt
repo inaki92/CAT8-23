@@ -14,7 +14,8 @@ data class FruitDomain(
     @PrimaryKey val fruitName: String,
     // val nutritions: Nutritions,
     val family: String,
-    val genus: String
+    val genus: String,
+    val id: Int
 )
 
 fun List<FruitsNetworkItem>
@@ -24,7 +25,8 @@ fun List<FruitsNetworkItem>
             fruitName = it.name ?: "",
             // nutritions = it.nutritions ?: Nutritions(),
             family = it.family ?: "",
-            genus = it.genus ?: ""
+            genus = it.genus ?: "",
+            id = it.id ?: 99999
         )
     }
 
@@ -33,5 +35,6 @@ fun FruitsNetworkItem.mapToDomainFruit(): FruitDomain =
         fruitName = this.name ?: "",
         // nutritions = this.nutritions ?: Nutritions(),
         family = this.family ?: "",
-        genus = this.genus ?: ""
+        genus = this.genus ?: "",
+        id = this.id ?: 99999
     )

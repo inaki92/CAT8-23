@@ -25,6 +25,9 @@ class AllFruitsPresenterImpl(
     private val repository: FruitsRepository = FruitsRepositoryImpl(fruitsDAO)
 ) : AllFruitsPresenter {
 
+//    @Inject
+//    lateinit var contractAllFruits: ViewContractAllFruits
+
     override fun init(viewContract: ViewContractAllFruits) {
         viewContractAllFruits = viewContract
     }

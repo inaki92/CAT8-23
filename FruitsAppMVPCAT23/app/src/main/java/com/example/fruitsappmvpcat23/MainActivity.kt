@@ -8,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.fruitsappmvpcat23.databinding.ActivityMainBinding
+import com.example.fruitsappmvpcat23.view.SearchFruitFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +19,14 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.nav_host_fragment_activity_main, supportFragmentManager.fragments.first())
+//            .addToBackStack("Search")
+//            .commit()
+//
+//        supportFragmentManager.findFragmentByTag("Search")
+//        supportFragmentManager.fragments.first()
 
         val navView: BottomNavigationView = binding.navView
 

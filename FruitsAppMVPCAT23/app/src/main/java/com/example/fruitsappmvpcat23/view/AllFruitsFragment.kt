@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.fruitsappmvpcat23.R
 import com.example.fruitsappmvpcat23.database.FruitsDatabase
+import com.example.fruitsappmvpcat23.database.MIGRATION_1_2
 import com.example.fruitsappmvpcat23.databinding.FragmentAllFruitsBinding
 import com.example.fruitsappmvpcat23.model.domain.FruitDomain
 import com.example.fruitsappmvpcat23.presenters.AllFruitsPresenter
@@ -33,7 +35,9 @@ class AllFruitsFragment : Fragment(), ViewContractAllFruits {
             requireActivity().applicationContext,
             FruitsDatabase::class.java,
             "fruits-db"
-        ).build()
+        )
+            .addMigrations(MIGRATION_1_2)
+            .build()
     }
 
     /**
@@ -56,6 +60,12 @@ class AllFruitsFragment : Fragment(), ViewContractAllFruits {
 
         presenter.getAllFruits()
 
+        binding.refreshItem.setOnRefreshListener {
+            //  here is the action when you swipe to refresh
+            presenter.getAllFruits()
+            binding.refreshItem.isRefreshing = true
+        }
+
         return binding.root
     }
 
@@ -67,10 +77,17 @@ class AllFruitsFragment : Fragment(), ViewContractAllFruits {
     override fun onSuccess(fruits: List<FruitDomain>) {
         Toast.makeText(requireContext(), "Success: ${fruits.first().fruitName}", Toast.LENGTH_LONG).show()
         Log.d(TAG, "onSuccess: $fruits")
+        binding.refreshItem.isRefreshing = false
     }
 
     override fun onFailure(error: Throwable) {
         Toast.makeText(requireContext(), "FAILURE: ${error.localizedMessage}", Toast.LENGTH_LONG).show()
         Log.d(TAG, "onFailure: ${error.localizedMessage}")
+        binding.refreshItem.isRefreshing = false
+    }
+
+    override fun onStop() {
+        super.onStop()
+        retainInstance = true
     }
 }

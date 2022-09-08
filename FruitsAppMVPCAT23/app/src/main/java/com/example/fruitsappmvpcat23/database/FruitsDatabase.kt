@@ -19,7 +19,7 @@ import com.example.fruitsappmvpcat23.model.domain.FruitDomain
  * 4. Extend the [RoomDatabase] class
  * 5. Build the Room DB from the context
  */
-@Database(entities = [FruitDomain::class], version = 1)
+@Database(entities = [FruitDomain::class], version = 2)
 abstract class FruitsDatabase : RoomDatabase() {
     abstract fun getFruitsDao(): FruitsDAO
 }
