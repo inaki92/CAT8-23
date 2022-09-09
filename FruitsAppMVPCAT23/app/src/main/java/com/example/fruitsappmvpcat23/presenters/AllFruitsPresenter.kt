@@ -10,6 +10,7 @@ import com.example.fruitsappmvpcat23.rest.FruitsRepository
 import com.example.fruitsappmvpcat23.rest.FruitsRepositoryImpl
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
 interface AllFruitsPresenter {
     fun init(viewContract: ViewContractAllFruits)
@@ -18,42 +19,39 @@ interface AllFruitsPresenter {
     fun destroy()
 }
 
-class AllFruitsPresenterImpl(
-    private val fruitsDAO: FruitsDAO,
-    private var viewContractAllFruits: ViewContractAllFruits? = null,
+class AllFruitsPresenterImpl @Inject constructor(
     private val disposables: CompositeDisposable = CompositeDisposable(),
-    private val repository: FruitsRepository = FruitsRepositoryImpl(fruitsDAO)
+    private val repository: FruitsRepository
 ) : AllFruitsPresenter {
 
-//    @Inject
-//    lateinit var contractAllFruits: ViewContractAllFruits
+    private var contractAllFruits: ViewContractAllFruits? = null
 
     override fun init(viewContract: ViewContractAllFruits) {
-        viewContractAllFruits = viewContract
+        contractAllFruits = viewContract
     }
 
     override fun checkNetworkConnection(connectivityManager: ConnectivityManager) {
         connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)?.let {
             if (!it.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
-                viewContractAllFruits?.onFailure(Throwable("No internet connection"))
+                contractAllFruits?.onFailure(Throwable("No internet connection"))
             }
         }
     }
 
     override fun getAllFruits() {
-        viewContractAllFruits?.loadingFruits(true)
+        contractAllFruits?.loadingFruits(true)
 
         repository.getAllFruits()
             .subscribe(
-                { fruits -> viewContractAllFruits?.onSuccess(fruits) },
-                { error -> viewContractAllFruits?.onFailure(error) }
+                { fruits -> contractAllFruits?.onSuccess(fruits) },
+                { error -> contractAllFruits?.onFailure(error) }
             )
             .also { disposables.add(it) }
     }
 
     override fun destroy() {
         disposables.clear()
-        viewContractAllFruits = null
+        contractAllFruits = null
     }
 
 }

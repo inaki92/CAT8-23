@@ -68,6 +68,10 @@ dependencies {
     implementation "androidx.room:room-rxjava2:2.4.3"
     kapt "androidx.room:room-compiler:2.4.3"
 
+    //dagger DI
+    implementation "com.google.dagger:dagger:2.43.2"
+    kapt "com.google.dagger:dagger-compiler:2.43.2"
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

@@ -11,6 +11,7 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 private const val TAG = "FruitsRepository"
 
@@ -19,11 +20,10 @@ interface FruitsRepository {
     fun searchFruit(fruitName: String): Single<FruitDomain>
 }
 
-class FruitsRepositoryImpl(
-    private val fruitsDAO: FruitsDAO,
-    private val fruitsApi: FruitsApi = Service.fruitsApi,
-    private val ioScheduler: Scheduler = Schedulers.io(),
-    private val localFruitsRepository: LocalFruitsRepository = LocalFruitsRepositoryImpl(fruitsDAO)
+class FruitsRepositoryImpl @Inject constructor(
+    private val fruitsApi: FruitsApi,
+    private val ioScheduler: Scheduler,
+    private val localFruitsRepository: LocalFruitsRepository
 ) : FruitsRepository {
 
     override fun getAllFruits(): Single<List<FruitDomain>> =

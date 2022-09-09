@@ -1,5 +1,6 @@
 package com.example.fruitsappmvpcat23.view
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,6 +15,8 @@ import com.example.fruitsappmvpcat23.R
 import com.example.fruitsappmvpcat23.database.FruitsDatabase
 import com.example.fruitsappmvpcat23.database.MIGRATION_1_2
 import com.example.fruitsappmvpcat23.databinding.FragmentAllFruitsBinding
+import com.example.fruitsappmvpcat23.di.FruitsApp
+import com.example.fruitsappmvpcat23.di.FruitsComponent
 import com.example.fruitsappmvpcat23.model.domain.FruitDomain
 import com.example.fruitsappmvpcat23.presenters.AllFruitsPresenter
 import com.example.fruitsappmvpcat23.presenters.AllFruitsPresenterImpl
@@ -45,6 +48,11 @@ class AllFruitsFragment : Fragment(), ViewContractAllFruits {
      */
     private val presenter: AllFruitsPresenter by lazy {
         AllFruitsPresenterImpl(fruitsDAO = fruitsDatabase.getFruitsDao())
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        FruitsApp.fruitsComponent.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

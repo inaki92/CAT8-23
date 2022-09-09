@@ -6,6 +6,7 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 /**
  * This [LocalFruitsRepository] allows you to have a clean architecture that will increase the testability.
@@ -25,10 +26,10 @@ interface LocalFruitsRepository {
     fun getSpecificFruit(fruitName: String): Single<FruitDomain>
 }
 
-class LocalFruitsRepositoryImpl(
+class LocalFruitsRepositoryImpl @Inject constructor(
     private val fruitsDatabase: FruitsDAO,
-    private val ioScheduler: Scheduler = Schedulers.io()
-) : LocalFruitsRepository{
+    private val ioScheduler: Scheduler
+) : LocalFruitsRepository {
 
     override fun insertFruits(fruits: List<FruitDomain>): Completable =
         fruitsDatabase.insertAllFruits(fruits)
