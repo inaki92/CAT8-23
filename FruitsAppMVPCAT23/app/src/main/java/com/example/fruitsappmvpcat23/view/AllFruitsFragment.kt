@@ -21,6 +21,7 @@ import com.example.fruitsappmvpcat23.model.domain.FruitDomain
 import com.example.fruitsappmvpcat23.presenters.AllFruitsPresenter
 import com.example.fruitsappmvpcat23.presenters.AllFruitsPresenterImpl
 import com.example.fruitsappmvpcat23.presenters.ViewContractAllFruits
+import javax.inject.Inject
 
 private const val TAG = "AllFruitsFragment"
 
@@ -46,9 +47,12 @@ class AllFruitsFragment : Fragment(), ViewContractAllFruits {
     /**
      * This is the presenter object that your view will use to interact with the business logic
      */
-    private val presenter: AllFruitsPresenter by lazy {
-        AllFruitsPresenterImpl(fruitsDAO = fruitsDatabase.getFruitsDao())
-    }
+//    private val presenter: AllFruitsPresenter by lazy {
+//        AllFruitsPresenterImpl()
+//    }
+
+    @Inject
+    lateinit var presenter: AllFruitsPresenter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
