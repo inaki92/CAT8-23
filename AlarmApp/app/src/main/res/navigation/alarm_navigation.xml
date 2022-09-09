@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/alarm_navigation"
+    app:startDestination="@id/SetAlarmFragment">
+
+    <fragment
+        android:id="@+id/SetAlarmFragment"
+        android:name="com.example.alarmapp.view.SetAlarmFragment"
+        android:label="Alarm"
+        tools:layout="@layout/fragment_set_alarm">
+
+        <action
+            android:id="@+id/action_SetAlarmFragment_to_ActionFragment"
+            app:destination="@id/ActionFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ActionFragment"
+        android:name="com.example.alarmapp.view.ActionPerformerFragment"
+        android:label="Action"
+        tools:layout="@layout/fragment_action_performer">
+
+    </fragment>
+
+</navigation>
