@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/AllFruitsFragment"
-        android:name="com.example.fruitsappmvpcat23.view.AllFruitsFragment"
+        android:name="com.example.fruitsappmvpcat23.view.AllFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_all_fruits" />
+        tools:layout="@layout/fragment_fruits" />
 
     <fragment
         android:id="@+id/SearchFruitFragment"

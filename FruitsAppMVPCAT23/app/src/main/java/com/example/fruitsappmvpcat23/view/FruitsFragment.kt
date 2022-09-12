@@ -8,27 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.example.fruitsappmvpcat23.R
 import com.example.fruitsappmvpcat23.database.FruitsDatabase
 import com.example.fruitsappmvpcat23.database.MIGRATION_1_2
-import com.example.fruitsappmvpcat23.databinding.FragmentAllFruitsBinding
+import com.example.fruitsappmvpcat23.databinding.FragmentFruitsBinding
 import com.example.fruitsappmvpcat23.di.FruitsApp
-import com.example.fruitsappmvpcat23.di.FruitsComponent
 import com.example.fruitsappmvpcat23.model.domain.FruitDomain
 import com.example.fruitsappmvpcat23.presenters.AllFruitsPresenter
-import com.example.fruitsappmvpcat23.presenters.AllFruitsPresenterImpl
 import com.example.fruitsappmvpcat23.presenters.ViewContractAllFruits
 import javax.inject.Inject
 
 private const val TAG = "AllFruitsFragment"
 
-class AllFruitsFragment : Fragment(), ViewContractAllFruits {
+class AllFragment : Fragment(), ViewContractAllFruits {
 
     private val binding by lazy {
-        FragmentAllFruitsBinding.inflate(layoutInflater)
+        FragmentFruitsBinding.inflate(layoutInflater)
     }
 
     /**

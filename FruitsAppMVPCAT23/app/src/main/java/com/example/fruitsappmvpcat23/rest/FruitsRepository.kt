@@ -1,16 +1,12 @@
 package com.example.fruitsappmvpcat23.rest
 
-import android.util.Log
-import com.example.fruitsappmvpcat23.database.FruitsDAO
 import com.example.fruitsappmvpcat23.database.LocalFruitsRepository
-import com.example.fruitsappmvpcat23.database.LocalFruitsRepositoryImpl
 import com.example.fruitsappmvpcat23.model.domain.FruitDomain
 import com.example.fruitsappmvpcat23.model.domain.mapToDomainFruit
 import com.example.fruitsappmvpcat23.model.domain.mapToDomainFruitList
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 private const val TAG = "FruitsRepository"
