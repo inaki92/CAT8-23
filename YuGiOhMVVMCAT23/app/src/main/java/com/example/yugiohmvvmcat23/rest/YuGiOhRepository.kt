@@ -12,6 +12,7 @@ import javax.inject.Inject
 
 interface YuGiOhRepository {
     fun getCardByType(cardType: CardType): Flow<UIState>
+    fun getCardByName(cardName: String): Flow<UIState>
 }
 
 class YuGiOhRepositoryImpl @Inject constructor(
@@ -25,7 +26,27 @@ class YuGiOhRepositoryImpl @Inject constructor(
         delay(2000)
 
         try {
-            val response = serviceApi.getCardsByType(cardType.typeName)
+            val response = serviceApi.getCards(cardType = cardType.typeName)
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    emit(UIState.SUCCESS(it.cards.mapToDomainCards()))
+                } ?: throw NullResponseFromServer("Cards are null")
+            } else {
+                throw FailureResponseFromServer(response.errorBody()?.string())
+            }
+        } catch (e: Exception) {
+            emit(UIState.ERROR(e))
+        }
+    }
+
+    override fun getCardByName(cardName: String): Flow<UIState> = flow {
+        emit(UIState.LOADING)
+
+        // Do not add delays on production code
+        delay(2000)
+
+        try {
+            val response = serviceApi.getCards(searchName = cardName)
             if (response.isSuccessful) {
                 response.body()?.let {
                     emit(UIState.SUCCESS(it.cards.mapToDomainCards()))

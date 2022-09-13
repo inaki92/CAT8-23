@@ -5,9 +5,10 @@
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/card_item.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_search_card.xml" value="0.433074951171875" />
         <entry key="app/src/main/res/layout/fragment_spell_cards.xml" value="0.24322916666666666" />
         <entry key="app/src/main/res/layout/letter_item.xml" value="0.541778055826823" />
-        <entry key="app/src/main/res/menu/cards_menu.xml" value="0.24322916666666666" />
+        <entry key="app/src/main/res/menu/cards_menu.xml" value="0.1" />
       </map>
     </option>
   </component>

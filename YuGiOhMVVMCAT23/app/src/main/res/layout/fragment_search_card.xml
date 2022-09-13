@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.SearchCardFragment">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_card_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.appcompat.widget.SearchView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_cards_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/search_card_value"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="0dp" />
+
+</RelativeLayout>

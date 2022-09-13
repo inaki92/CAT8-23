@@ -9,6 +9,7 @@ import com.example.yugiohmvvmcat23.rest.YuGiOhRepository
 import com.example.yugiohmvvmcat23.utils.CardType
 import com.example.yugiohmvvmcat23.utils.UIState
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 
 private const val TAG = "CardsViewModel"
 
@@ -42,6 +43,14 @@ class CardsViewModel(
                 }
                 // post value from the LIVE DATA can be called in the main thread as well as the worker thread
                 // this will keep only the last value emitted, and will be slower than the set value
+                _spellCards.postValue(it)
+            }
+        }
+    }
+
+    fun getCardByName(cardName: String) {
+        viewModelScope.launch {
+            repository.getCardByName(cardName).collect {
                 _spellCards.postValue(it)
             }
         }

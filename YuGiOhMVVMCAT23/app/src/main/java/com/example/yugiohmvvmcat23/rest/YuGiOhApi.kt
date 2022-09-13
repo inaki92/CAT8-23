@@ -13,8 +13,9 @@ interface YuGiOhApi {
      * https://db.ygoprodeck.com/api/v7/cardinfo.php?type=Spell Card
      */
     @GET(GENERAL_PATH)
-    suspend fun getCardsByType(
-        @Query("type") cardType: String
+    suspend fun getCards(
+        @Query("type") cardType: String? = null,
+        @Query("fname") searchName: String? = null
     ): Response<Card>
 
     companion object {

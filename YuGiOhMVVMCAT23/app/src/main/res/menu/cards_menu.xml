@@ -6,4 +6,10 @@
         android:title="Spell cards"
         android:icon="@drawable/ic_baseline_sim_card_24">
     </item>
+
+    <item
+        android:id="@+id/SearchCardFragment"
+        android:title="Search cards"
+        android:icon="@drawable/ic_baseline_search_24">
+    </item>
 </menu>

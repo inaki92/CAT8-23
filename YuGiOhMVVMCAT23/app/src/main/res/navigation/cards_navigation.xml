@@ -13,4 +13,12 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/SearchCardFragment"
+        android:name="com.example.yugiohmvvmcat23.view.SearchCardFragment"
+        android:label="Search card"
+        tools:layout="@layout/fragment_search_card">
+
+    </fragment>
+
 </navigation>
