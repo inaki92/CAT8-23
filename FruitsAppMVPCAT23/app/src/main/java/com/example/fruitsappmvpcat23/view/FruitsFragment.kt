@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
+import com.example.fruitsappmvpcat23.adapter.AllFruitsAdapter
 import com.example.fruitsappmvpcat23.database.FruitsDatabase
 import com.example.fruitsappmvpcat23.database.MIGRATION_1_2
 import com.example.fruitsappmvpcat23.databinding.FragmentFruitsBinding
@@ -49,6 +51,10 @@ class AllFragment : Fragment(), ViewContractAllFruits {
     @Inject
     lateinit var presenter: AllFruitsPresenter
 
+    private val fruitAdapter by lazy {
+        AllFruitsAdapter()
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         FruitsApp.fruitsComponent.inject(this)
@@ -64,6 +70,12 @@ class AllFragment : Fragment(), ViewContractAllFruits {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        binding.fruitsRv.apply {
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = fruitAdapter
+        }
 
         presenter.getAllFruits()
 
@@ -85,6 +97,7 @@ class AllFragment : Fragment(), ViewContractAllFruits {
         Toast.makeText(requireContext(), "Success: ${fruits.first().fruitName}", Toast.LENGTH_LONG).show()
         Log.d(TAG, "onSuccess: $fruits")
         binding.refreshItem.isRefreshing = false
+        fruitAdapter.updateFruits(fruits)
     }
 
     override fun onFailure(error: Throwable) {

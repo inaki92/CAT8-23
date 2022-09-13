@@ -1,5 +1,6 @@
 package com.example.yugiohmvvmcat23.rest
 
+import com.example.yugiohmvvmcat23.model.domain.mapToDomainCards
 import com.example.yugiohmvvmcat23.utils.CardType
 import com.example.yugiohmvvmcat23.utils.FailureResponseFromServer
 import com.example.yugiohmvvmcat23.utils.NullResponseFromServer
@@ -7,12 +8,13 @@ import com.example.yugiohmvvmcat23.utils.UIState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 interface YuGiOhRepository {
     fun getCardByType(cardType: CardType): Flow<UIState>
 }
 
-class YuGiOhRepositoryImpl(
+class YuGiOhRepositoryImpl @Inject constructor(
     private val serviceApi: YuGiOhApi
 ) : YuGiOhRepository {
 
@@ -26,7 +28,7 @@ class YuGiOhRepositoryImpl(
             val response = serviceApi.getCardsByType(cardType.typeName)
             if (response.isSuccessful) {
                 response.body()?.let {
-                    emit(UIState.SUCCESS(it.cards))
+                    emit(UIState.SUCCESS(it.cards.mapToDomainCards()))
                 } ?: throw NullResponseFromServer("Cards are null")
             } else {
                 throw FailureResponseFromServer(response.errorBody()?.string())
