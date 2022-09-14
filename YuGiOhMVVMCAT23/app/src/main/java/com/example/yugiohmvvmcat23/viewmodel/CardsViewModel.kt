@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.yugiohmvvmcat23.rest.YuGiOhRepository
+import com.example.yugiohmvvmcat23.rest.YuGiOhRepositoryImpl
 import com.example.yugiohmvvmcat23.utils.CardType
 import com.example.yugiohmvvmcat23.utils.UIState
 import kotlinx.coroutines.*
@@ -14,7 +15,8 @@ import kotlinx.coroutines.flow.collect
 private const val TAG = "CardsViewModel"
 
 class CardsViewModel(
-    private val repository: YuGiOhRepository
+    private val repository: YuGiOhRepository,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     // this is a backfield variable
@@ -27,13 +29,13 @@ class CardsViewModel(
     val spellCards: LiveData<UIState> get() = _spellCards
 
 
-    init {
-        // here you can perform some operation once the viewmodel gets created
-        Log.d(TAG, "ViewModel INIT: ViewModel created")
-    }
+//    init {
+//        // here you can perform some operation once the viewmodel gets created
+//        Log.d(TAG, "ViewModel INIT: ViewModel created")
+//    }
 
     fun getCardsByType(cardType: CardType) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             // HERE WEW ARE IN THE WORKER THREAD
             repository.getCardByType(cardType).collect {
                 withContext(Dispatchers.Main) {
