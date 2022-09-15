@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/FruitsFragment">
+
+    <fragment
+        android:id="@+id/FruitsFragment"
+        android:name="com.example.fruitsappmvvm.ui.home.FruitsFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_fruits" />
+
+    <fragment
+        android:id="@+id/CreateFragment"
+        android:name="com.example.fruitsappmvvm.ui.dashboard.CreateFruitFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_create_fruit" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.fruitsappmvvm.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+</navigation>
