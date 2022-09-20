@@ -26,7 +26,7 @@ class SchoolsRepositoryImpl @Inject constructor(
             if(response.isSuccessful) {
                 response.body()?.let {
                     emit(UIState.SUCCESS(it.mapToDomainSchools()))
-                } ?: throw NullResponseException("School response is null")
+                } ?: throw NullResponseException(ERROR_NULL_MESSAGE)
             } else {
                 throw FailureResponseException(response.errorBody()?.string())
             }
@@ -48,5 +48,9 @@ class SchoolsRepositoryImpl @Inject constructor(
         } else {
             throw FailureResponseException(response.errorBody()?.string())
         }
+    }
+
+    companion object {
+        private const val ERROR_NULL_MESSAGE = "School response is null"
     }
 }
