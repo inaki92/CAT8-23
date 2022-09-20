@@ -64,7 +64,9 @@ dependencies {
 
     //hilt
     implementation "com.google.dagger:hilt-android:2.42"
+
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
+
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
     kapt "com.google.dagger:hilt-compiler:2.42"

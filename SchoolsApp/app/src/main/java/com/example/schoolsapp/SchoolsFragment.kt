@@ -15,20 +15,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.schoolsapp.adapter.SchoolsAdapter
 import com.example.schoolsapp.databinding.FragmentSchoolsBinding
 import com.example.schoolsapp.model.domain.School
+import com.example.schoolsapp.utils.BaseFragment
 import com.example.schoolsapp.utils.ClickHandler
 import com.example.schoolsapp.utils.UIState
 import com.example.schoolsapp.viewmodel.SchoolsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SchoolsFragment : Fragment() {
+class SchoolsFragment : BaseFragment() {
 
     private val binding by lazy {
         FragmentSchoolsBinding.inflate(layoutInflater)
-    }
-
-    private val schoolViewModel by lazy {
-        ViewModelProvider(requireActivity())[SchoolsViewModel::class.java]
     }
 
     private val schoolAdapter by lazy {
