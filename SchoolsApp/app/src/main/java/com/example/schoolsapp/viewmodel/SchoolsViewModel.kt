@@ -13,9 +13,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class SchoolsViewModel(
+class SchoolsViewModel @Inject constructor(
     private val schoolsRepository: SchoolsRepository,
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {

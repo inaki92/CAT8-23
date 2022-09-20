@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
@@ -37,11 +38,12 @@ class SearchCardFragment : Fragment() {
 
         binding.searchCardValue.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
+                Toast.makeText(requireContext(), query, Toast.LENGTH_LONG).show()
+                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                cardsViewModel.getCardByName(newText!!)
+                // cardsViewModel.getCardByName(newText!!)
                 return false
             }
         })

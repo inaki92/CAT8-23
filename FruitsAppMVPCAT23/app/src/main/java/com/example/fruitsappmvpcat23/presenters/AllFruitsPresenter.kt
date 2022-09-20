@@ -60,5 +60,8 @@ interface ViewContractAllFruits {
     fun loadingFruits(isLoading: Boolean)
     fun onSuccess(fruits: List<FruitDomain>)
     fun onFailure(error: Throwable)
+    fun gettingDta()
+    fun someOtherTHing()
+    fun somethingElse()
 }
 

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".SchoolsFragment">
 
-    <fragment
-        android:id="@+id/school_frag_container"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/school_navigation"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/schools_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/loading_schools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

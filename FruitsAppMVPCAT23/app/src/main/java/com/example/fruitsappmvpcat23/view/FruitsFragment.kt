@@ -106,6 +106,18 @@ class AllFragment : Fragment(), ViewContractAllFruits {
         binding.refreshItem.isRefreshing = false
     }
 
+    override fun gettingDta() {
+
+    }
+
+    override fun someOtherTHing() {
+        TODO("Not yet implemented")
+    }
+
+    override fun somethingElse() {
+        TODO("Not yet implemented")
+    }
+
     override fun onStop() {
         super.onStop()
         retainInstance = true
