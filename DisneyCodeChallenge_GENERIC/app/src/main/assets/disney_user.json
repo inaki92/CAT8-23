@@ -1,0 +1,34 @@
+[
+  {
+    "name": "NAME",
+    "hasReservation": true
+  },
+  {
+    "name": "NAME2",
+    "hasReservation": false
+  },
+  {
+    "name": "NAME3",
+    "hasReservation": false
+  },
+  {
+    "name": "NAME4",
+    "hasReservation": true
+  },
+  {
+    "name": "NAME5",
+    "hasReservation": true
+  },
+  {
+    "name": "NAME6",
+    "hasReservation": false
+  },
+  {
+    "name": "NAME7",
+    "hasReservation": true
+  },
+  {
+    "name": "NAME8",
+    "hasReservation": true
+  }
+]

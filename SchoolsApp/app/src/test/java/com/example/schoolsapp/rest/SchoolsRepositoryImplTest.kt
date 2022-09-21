@@ -13,7 +13,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import retrofit2.Response
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SchoolsRepositoryImplTest {
