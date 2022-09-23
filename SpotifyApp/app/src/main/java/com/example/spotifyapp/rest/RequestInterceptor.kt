@@ -1,13 +1,21 @@
 package com.example.spotifyapp.rest
 
+import com.example.spotifyapp.model.authentication.TokenHandling
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
 
-class RequestInterceptor : Interceptor {
+class RequestInterceptor @Inject constructor(
+    private val tokenHandling: TokenHandling
+) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         chain.request().newBuilder().apply {
-            addHeader(AUTH_HEADER, "Basic ZjY5YzE0YWFiMzMwNDhhZGFiZThmZWJkM2IyYjc1ZTg6ODQ4OWIzODM1YzE5NGQwNzg1YjdiY2M5ZDI1YzRlYjk=")
+            if(chain.request().url.host == SpotifyServiceApi.AUTH_BASE_URL) {
+                addHeader(AUTH_HEADER, "Basic ${tokenHandling.authorizationKey}")
+            } else {
+                addHeader(AUTH_HEADER, "Bearer ${tokenHandling.authToken}")
+            }
         }.also {
             return chain.proceed(it.build())
         }

@@ -10,7 +10,6 @@ interface SpotifyServiceApi {
     @FormUrlEncoded
     @POST(AUTH_PATH)
     suspend fun generateAuthToken(
-        @Url authenticationURL: String = AUTH_BASE_URL,
         @Field("grant_type") type: String = "client_credentials"
     ): Response<AuthenticationToken>
 

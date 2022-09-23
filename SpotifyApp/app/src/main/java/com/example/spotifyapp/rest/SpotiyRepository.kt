@@ -11,14 +11,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import retrofit2.Response
+import javax.inject.Inject
+import javax.inject.Named
 
 interface SpotifyRepository {
     suspend fun getArtists(artistIds: List<String>, coroutineScope: CoroutineScope): StateFlow<UIState>
     suspend fun authenticate(): Response<AuthenticationToken>
 }
 
-class SpotifyRepositoryImpl(
-    private val spotifyServiceApi: SpotifyServiceApi
+class SpotifyRepositoryImpl @Inject constructor(
+    @Named("spotifyService") private val spotifyServiceApi: SpotifyServiceApi,
+    @Named("authService") private val authServiceApi: SpotifyServiceApi
 ) : SpotifyRepository {
 
     override suspend fun getArtists(
@@ -46,6 +49,6 @@ class SpotifyRepositoryImpl(
     )
 
     override suspend fun authenticate(): Response<AuthenticationToken> =
-        spotifyServiceApi.generateAuthToken()
+        authServiceApi.generateAuthToken()
 
 }

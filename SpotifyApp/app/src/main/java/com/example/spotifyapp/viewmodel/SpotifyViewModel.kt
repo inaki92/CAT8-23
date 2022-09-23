@@ -4,13 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.spotifyapp.model.authentication.TokenHandling
 import com.example.spotifyapp.rest.ResponseInterceptor
 import com.example.spotifyapp.rest.SpotifyRepository
 import com.example.spotifyapp.utils.UIState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SpotifyViewModel(
+@HiltViewModel
+class SpotifyViewModel @Inject constructor(
+    private val tokenHandling: TokenHandling,
     private val repository: SpotifyRepository,
     private val ioDispatcher: CoroutineDispatcher,
     private val responseInterceptor: ResponseInterceptor
@@ -32,7 +37,16 @@ class SpotifyViewModel(
 
     private fun getAuthorizedToken() {
         viewModelScope.launch(ioDispatcher) {
-            repository.authenticate()
+            try {
+                val response = repository.authenticate()
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        tokenHandling.authToken = it.accessToken
+                    }
+                }
+            } catch (e: Exception) {
+
+            }
         }
     }
 
