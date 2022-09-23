@@ -1,5 +1,6 @@
 package com.example.schoolsapp
 
+import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.net.Uri
@@ -8,6 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityManager
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -60,6 +63,14 @@ class SchoolsFragment : BaseFragment() {
         binding.schoolsRv.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = schoolAdapter
+        }
+
+        val accessibilityManager = requireContext().getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+
+        if (accessibilityManager.isEnabled) {
+            val event = AccessibilityEvent.obtain(AccessibilityEvent.TYPE_ANNOUNCEMENT)
+            event.text.add("HELLO")
+            accessibilityManager.sendAccessibilityEvent(event)
         }
 
         schoolViewModel.schools.observe(viewLifecycleOwner) { state ->
