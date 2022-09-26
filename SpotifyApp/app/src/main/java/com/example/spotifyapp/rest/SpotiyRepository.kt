@@ -1,7 +1,9 @@
 package com.example.spotifyapp.rest
 
+import com.example.spotifyapp.model.NetworkArtist
 import com.example.spotifyapp.model.authentication.AuthenticationToken
 import com.example.spotifyapp.model.domain.mapToDomainArtist
+import com.example.spotifyapp.model.search.NetworkSearch
 import com.example.spotifyapp.utils.FailureResponse
 import com.example.spotifyapp.utils.NullBodyResponse
 import com.example.spotifyapp.utils.UIState
@@ -15,38 +17,23 @@ import javax.inject.Inject
 import javax.inject.Named
 
 interface SpotifyRepository {
-    suspend fun getArtists(artistIds: List<String>, coroutineScope: CoroutineScope): StateFlow<UIState>
+    suspend fun getArtists(artistIds: List<String>): Response<NetworkArtist>
+    suspend fun getArtistsByGenre(genre: String): Response<NetworkSearch>
     suspend fun authenticate(): Response<AuthenticationToken>
 }
+
+// DATA LAYER
 
 class SpotifyRepositoryImpl @Inject constructor(
     @Named("spotifyService") private val spotifyServiceApi: SpotifyServiceApi,
     @Named("authService") private val authServiceApi: SpotifyServiceApi
 ) : SpotifyRepository {
 
-    override suspend fun getArtists(
-        artistIds: List<String>,
-        coroutineScope: CoroutineScope
-    ): StateFlow<UIState> = flow {
-        emit(UIState.LOADING)
+    override suspend fun getArtists(artistIds: List<String>): Response<NetworkArtist> =
+        spotifyServiceApi.getArtists(artistIds.joinToString(","))
 
-        try {
-            val response = spotifyServiceApi.getArtists(artistIds.joinToString { "," })
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    emit(UIState.SUCCESS(it.artists.mapToDomainArtist()))
-                } ?: throw NullBodyResponse("Artists response is null")
-            } else {
-                throw FailureResponse(response.errorBody()?.string())
-            }
-        } catch (e: Exception) {
-            emit(UIState.ERROR(e))
-        }
-    }.stateIn(
-        coroutineScope,
-        SharingStarted.Eagerly,
-        UIState.LOADING
-    )
+    override suspend fun getArtistsByGenre(genre: String): Response<NetworkSearch> =
+        spotifyServiceApi.getArtistsByGenre(genre, "artist")
 
     override suspend fun authenticate(): Response<AuthenticationToken> =
         authServiceApi.generateAuthToken()

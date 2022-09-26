@@ -11,7 +11,8 @@ class RequestInterceptor @Inject constructor(
 
     override fun intercept(chain: Interceptor.Chain): Response {
         chain.request().newBuilder().apply {
-            if(chain.request().url.host == SpotifyServiceApi.AUTH_BASE_URL) {
+            // todo fix issues with token HEADER
+            if(chain.request().method == "POST") {
                 addHeader(AUTH_HEADER, "Basic ${tokenHandling.authorizationKey}")
             } else {
                 addHeader(AUTH_HEADER, "Bearer ${tokenHandling.authToken}")
