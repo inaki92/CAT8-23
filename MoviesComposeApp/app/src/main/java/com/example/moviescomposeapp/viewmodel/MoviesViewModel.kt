@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.moviescomposeapp.model.DomainMovie
 import com.example.moviescomposeapp.rest.MoviesRepository
 import com.example.moviescomposeapp.utils.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,8 @@ class MoviesViewModel @Inject constructor(
     init {
         getMovies()
     }
+
+    var movie: DomainMovie? = null
 
     private val _movies: MutableLiveData<UIState> = MutableLiveData(UIState.LOADING)
     val movies: LiveData<UIState> get() = _movies
