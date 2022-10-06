@@ -1,7 +1,6 @@
 package com.example.acronymappcompose
 
 import android.os.Bundle
-import android.widget.SearchView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -24,19 +23,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
+import com.example.acronymappcompose.di.AcronymApp
 import com.example.acronymappcompose.model.domain.DomainMeaning
 import com.example.acronymappcompose.ui.theme.AcronymAppComposeTheme
 import com.example.acronymappcompose.utils.UIState
 import com.example.acronymappcompose.viewmodel.AcronymViewModel
+import com.example.acronymappcompose.viewmodel.ViewModelFactory
+import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
     private val acronymViewModel by lazy {
-        ViewModelProvider(this)[AcronymViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[AcronymViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        AcronymApp.acronymComponent.inject(this)
+
         setContent {
             AcronymAppComposeTheme {
                 // A surface container using the 'background' color from the theme

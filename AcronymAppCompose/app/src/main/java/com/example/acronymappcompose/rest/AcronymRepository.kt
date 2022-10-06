@@ -1,18 +1,18 @@
 package com.example.acronymappcompose.rest
 
-import android.content.Context
 import com.example.acronymappcompose.model.domain.mapToDomainMeaning
 import com.example.acronymappcompose.utils.UIState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
 interface AcronymRepository {
     fun getMeaning(acronym: String): Flow<UIState>
 }
 
-class AcronymRepositoryImpl(
+class AcronymRepositoryImpl @Inject constructor(
     private val apiService: AcronymApi,
     private val ioDispatcher: CoroutineDispatcher
 ) : AcronymRepository {
