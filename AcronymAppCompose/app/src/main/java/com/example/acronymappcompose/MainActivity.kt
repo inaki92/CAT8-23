@@ -83,7 +83,9 @@ fun SearchViewBar(viewModel: AcronymViewModel) {
             value = textState.value,
             onValueChange = {
                 textState.value = it
-                viewModel.getMeaningOf(it.text)
+                if (it.text.length >= 2) {
+                    viewModel.getMeaningOf(it.text)
+                }
             },
             label = { Text(text = "Search Acronym") },
             singleLine = true,
