@@ -1,32 +1,17 @@
 package com.example.acronymappcompose.rest
 
-import com.example.acronymappcompose.model.domain.mapToDomainMeaning
-import com.example.acronymappcompose.utils.UIState
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import com.example.acronymappcompose.model.AbbreviationItem
+import retrofit2.Response
 import javax.inject.Inject
 
 interface AcronymRepository {
-    fun getMeaning(acronym: String): Flow<UIState>
+    suspend fun getMeaning(acronym: String): Response<List<AbbreviationItem>>
 }
 
 class AcronymRepositoryImpl @Inject constructor(
-    private val apiService: AcronymApi,
-    private val ioDispatcher: CoroutineDispatcher
+    private val apiService: AcronymApi
 ) : AcronymRepository {
 
-    override fun getMeaning(acronym: String): Flow<UIState> = flow {
-        emit(UIState.LOADING)
-
-        val response = apiService.getMeaning(acronym)
-        if(response.isSuccessful) {
-            response.body()?.let {
-                emit(UIState.SUCCESS(it.mapToDomainMeaning()))
-            } ?: throw Exception("Response body is null")
-        } else {
-            throw Exception("Failure response")
-        }
-    }.flowOn(ioDispatcher)
+    override suspend fun getMeaning(acronym: String): Response<List<AbbreviationItem>> =
+        apiService.getMeaning(acronym)
 }

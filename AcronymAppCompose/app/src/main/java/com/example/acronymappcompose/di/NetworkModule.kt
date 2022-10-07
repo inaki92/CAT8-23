@@ -3,6 +3,8 @@ package com.example.acronymappcompose.di
 import android.content.Context
 import com.example.acronymappcompose.rest.AcronymApi
 import com.example.acronymappcompose.rest.CacheInterceptor
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,6 +20,10 @@ const val cacheSize = 10 * 1024 * 1024 // 10MB
 
 @Module
 class NetworkModule {
+
+    @Provides
+    fun providesGson(): Gson =
+        GsonBuilder().create()
 
     @Provides
     fun providesLoggingInterceptor(): HttpLoggingInterceptor =
@@ -49,11 +55,12 @@ class NetworkModule {
 
     @Provides
     fun providesAcronymService(
-        okHttpClient: OkHttpClient
+        okHttpClient: OkHttpClient,
+        gson: Gson
     ): AcronymApi =
         Retrofit.Builder()
             .baseUrl(AcronymApi.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
             .create(AcronymApi::class.java)

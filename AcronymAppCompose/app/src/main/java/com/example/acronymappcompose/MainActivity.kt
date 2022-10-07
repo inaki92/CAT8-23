@@ -23,6 +23,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
+import androidx.work.Configuration
+import androidx.work.WorkManager
+import androidx.work.WorkerFactory
 import com.example.acronymappcompose.di.AcronymApp
 import com.example.acronymappcompose.model.domain.DomainMeaning
 import com.example.acronymappcompose.ui.theme.AcronymAppComposeTheme
