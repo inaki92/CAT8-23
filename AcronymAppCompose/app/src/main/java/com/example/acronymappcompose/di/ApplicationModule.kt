@@ -15,11 +15,4 @@ class ApplicationModule(private val application: Application) {
 
     @Provides
     fun provideContext(): Context = application.applicationContext
-
-    @Provides
-    fun providesWorkManagerFactory(
-        repositoryModule: AcronymRepository,
-        useCase: AcronymDataUseCase
-    ): WorkerFactory =
-        WorkerFactoryImpl(repositoryModule, useCase)
 }
